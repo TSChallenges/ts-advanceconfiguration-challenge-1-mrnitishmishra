@@ -4,7 +4,7 @@
 account_number=$1
 transaction_type=$2
 amount=$3
-log_file="transaction.sh"
+log_file="transaction_log.txt"
 
 if [["$transaction_type" != "deposite" && "$transaction_type" != "withdrawal" ]]; then
     echo "Error: Transaction type must be either 'deposite' or 'withdrawl'."
@@ -20,6 +20,10 @@ timestamp=$(date + "%Y-%m-%d %H:%M:%S")
 
 echo "$timestamp | Account: $account_number | Type: $transaction_type | Amount: $amount" >>$log_file"
 
+
+if (("$2"=="withdrawal" && $3>=50000));then
+    echo "ALERT: High-value transaction detected!"
+fi
 echo "transaction logged successfully in $log_file."
 
 # Get the current timestamp
